@@ -1,11 +1,11 @@
 [Unit]
-Description=Netctl Monitor
+Description=Wpa Monitor
 After=network-online.target
 Wants=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/sbin/wpa_monitor %I 3600 20000000
+ExecStart=/usr/local/sbin/wpa_monitor %I 3600 20000000
 
 [Install]
 Alias=multi-user.target.wants/wpa_monitor@%i.service
