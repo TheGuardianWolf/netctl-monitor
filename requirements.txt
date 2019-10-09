@@ -1,1 +1,3 @@
-speedtest-cli==2.1.2
+speedtest-cli>=2.1.2
+systemd-python>=234
+pythonping>=1.0.5
