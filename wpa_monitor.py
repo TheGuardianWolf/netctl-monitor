@@ -95,14 +95,17 @@ if __name__ == "__main__":
 
     try:
         i = 0
+        j = args.speed_tests_per_ping_test
+
         while True:
             time.sleep(args.ping_interval)
 
-            if (i % args.speed_tests_per_ping_test) == 0:
+            if (i % j) == j:
                 target = run_speedtest
             else:
                 target = run_ping
 
+            i += 1
             t = Thread(target=target, daemon=True)
             t.start()
     except Exception as e:
