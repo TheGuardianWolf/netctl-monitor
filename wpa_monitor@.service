@@ -5,7 +5,7 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-ExecStart=/usr/local/sbin/wpa_monitor %I cloudflare.com 300 100 48 3600 20
+ExecStart=/usr/local/sbin/wpa_monitor %I cloudflare.com 300 100 48 20
 
 [Install]
 Alias=multi-user.target.wants/wpa_monitor@%i.service

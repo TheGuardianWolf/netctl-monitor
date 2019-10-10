@@ -60,9 +60,10 @@ if __name__ == "__main__":
 
     logger = logging.getLogger('wpa_monitor_journal')
     logger.addHandler(journal.JournalHandler())
-    logger.info("Monitoring connection on {}, pinging {} per {} seconds, speedtesting per {} seconds. Network will reset if latency is above {} ms or speed is below {} Mbits/s".format(
+    logger.setLevel(logging.INFO)
+    logger.info("Monitoring connection on {}, pinging {} per {} seconds, speedtesting after {} intervals. Network will reset if latency is above {} ms or speed is below {} Mbits/s".format(
         args.interface, args.ping_address, args.ping_interval,
-        args.speed_interval, args.ping_threshold, args.speed_threshold))
+        args.speed_tests_per_ping_test, args.ping_threshold, args.speed_threshold))
 
     lock = Lock()
 
