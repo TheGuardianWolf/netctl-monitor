@@ -11,6 +11,7 @@ from systemd import journal
 from pythonping import ping
 from math import inf
 from threading import Thread, Lock
+from statistics import median
 
 
 def network_latency(address, latency_threshold=3):
@@ -18,8 +19,11 @@ def network_latency(address, latency_threshold=3):
     Returns average ping to an address over 5 pings in milliseconds.
     """
     try:
-        responses = ping(address, timeout=latency_threshold, count=5, size=56)
-        return responses.rtt_avg_ms
+        responses = []
+        for i in range(0, 5):
+            time.sleep(1)
+            responses.append(ping(address, timeout=latency_threshold, count=5, size=56).rtt_avg_ms)
+        return median(responses)
     except OSError:
         # unreachable, so infinite latency
         return inf
@@ -88,7 +92,7 @@ if __name__ == "__main__":
                 logger.info("Ping interval passed, testing...")
                 latency = network_latency(args.ping_address, args.ping_threshold * 2)
                 logger.info("Network latency reported as {} ms".format(latency))
-                if latency < args.ping_threshold:
+                if latency > args.ping_threshold:
                     logger.info("Reconnecting network due to high latency ({} > {})".format(latency, args.ping_threshold))
                     cmd = reconnect(args.interface)
                     logger.info("Reconnection output: {}".format(cmd))
