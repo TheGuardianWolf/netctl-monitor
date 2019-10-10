@@ -90,7 +90,7 @@ if __name__ == "__main__":
         try:
             with lock:
                 logger.info("Ping interval passed, testing...")
-                latency = network_latency(args.ping_address, args.ping_threshold * 2)
+                latency = network_latency(args.ping_address, args.ping_threshold / 1000 * 2)
                 logger.info("Network latency reported as {} ms".format(latency))
                 if latency > args.ping_threshold:
                     logger.info("Reconnecting network due to high latency ({} > {})".format(latency, args.ping_threshold))
