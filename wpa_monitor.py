@@ -79,19 +79,23 @@ if __name__ == "__main__":
                     logger.info("Reconnection output: {}".format(cmd))
         except TimeoutError:
             logger.warning("Speed test tried to run but was blocked.")
+        except Exception as e:
+            logger.error(traceback.format_exc())
 
     def run_ping():
         try:
             with lock:
                 logger.info("Ping interval passed, testing...")
-                latency = network_latency(args.address, args.ping_threshold * 2)
-                logger.info("Network speed reported as {} Mbits/s".format(speed))
+                latency = network_latency(args.ping_address, args.ping_threshold * 2)
+                logger.info("Network latency reported as {} ms".format(latency))
                 if latency < args.ping_threshold:
                     logger.info("Reconnecting network due to high latency ({} > {})".format(latency, args.ping_threshold))
                     cmd = reconnect(args.interface)
                     logger.info("Reconnection output: {}".format(cmd))
         except TimeoutError:
             logger.warning("Ping test tried to run but was blocked.")
+        except Exception as e:
+            logger.error(traceback.format_exc())
 
     try:
         i = 0
